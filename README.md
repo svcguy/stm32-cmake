@@ -1,3 +1,18 @@
+# svcguy fork
+Forked from https://github.com/ObKo/stm32-cmake.  Adapted to suit my embedded development needs.
+
+## Changes
+
+* Convert to a template for starting an application
+* Remove examples
+* Remove newlib
+* Remove ChibiOS (retain support for FreeRTOS)
+* Complete support for uGFX
+* Add VSCode support
+* Add Black Magic Probe flashing and debug support
+
+Thanks to ObKo and everyone who contributed for thier excellent work.
+
 # About
 
 This project is used to develop applications for the STM32 - ST's ARM Cortex-Mx MCUs. It uses cmake and GCC, along with newlib (libc), STM32CubeMX or ChibiOS.

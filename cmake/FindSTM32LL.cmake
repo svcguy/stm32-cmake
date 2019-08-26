@@ -41,8 +41,8 @@ ELSEIF(STM32_FAMILY STREQUAL "F4")
     SET(LL_PREFIX stm32f4xx_)
 
 ELSEIF(STM32_FAMILY STREQUAL "F7")
-    SET(LL_COMPONENTS	adc bus cortex crc dac dma2d dma exti gpio i2c i2s iwdg
-						lptim pwr rcc rng rtc spi system tim usart usb utils wwdg)
+    SET(LL_COMPONENTS	adc bus cortex crc dac dma2d dma exti fmc gpio i2c i2s iwdg
+						lptim pwr rcc rng rtc sdmmc spi system tim usart usb utils wwdg)
 
     SET(LL_REQUIRED_COMPONENTS bus cortex pwr rcc system utils)
 
@@ -75,7 +75,7 @@ ELSEIF(STM32_FAMILY STREQUAL "L4")
 
 ENDIF()
 
-ADD_DEFINITIONS(-DUSE_FULL_LL_DRIVER)
+#ADD_DEFINITIONS(-DUSE_FULL_LL_DRIVER)
 
 FOREACH(cmp ${LL_REQUIRED_COMPONENTS})
 	LIST(FIND STM32LL_FIND_COMPONENTS ${cmp} STM32LL_FOUND_INDEX)
@@ -118,6 +118,8 @@ FOREACH(LL_SRC ${LL_SRCS})
 	)
 	LIST(APPEND STM32LL_SOURCES ${LL_${LL_SRC_CLEAN}_FILE})
 ENDFOREACH()
+
+MESSAGE(STATUS "LL_SRCS: ${LL_SRCS}")
     
 INCLUDE(FindPackageHandleStandardArgs)
 

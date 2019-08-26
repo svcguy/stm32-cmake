@@ -9,7 +9,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F3")
 ELSEIF(STM32_FAMILY STREQUAL "F4")
 	SET(PORT_GCC_DIR_SUFFIX "CM4F")
 ELSEIF(STM32_FAMILY STREQUAL "F7")
-	SET(PORT_GCC_DIR_SUFFIX "CM7")
+	SET(PORT_GCC_DIR_SUFFIX "CM7/r0p1")
 ELSEIF(STM32_FAMILY STREQUAL "L0")
 	SET(PORT_GCC_DIR_SUFFIX "CM0")
 ELSEIF(STM32_FAMILY STREQUAL "L1")
@@ -21,6 +21,7 @@ SET(FREERTOS_SRC_FILES
 	event_groups.c
 	list.c
 	queue.c
+	stream_buffer.c
 	tasks.c
 	timers.c
 )
@@ -31,13 +32,16 @@ SET(FREERTOS_HEADERS
 	event_groups.h
 	FreeRTOS.h
 	list.h
+	message_buffer.h
 	mpu_prototypes.h
 	mpu_wrappers.h
 	portable.h
 	projdefs.h
 	queue.h
 	semphr.h
+	stack_macros.h
 	StackMacros.h
+	stream_buffer.h
 	task.h
 	timers.h
 )
@@ -105,6 +109,7 @@ SET(FreeRTOS_INCLUDE_DIRS
 	${CMSIS_OS_INC_DIR}
 	${PORTMACRO_INC_DIR}
 )
+MESSAGE(STATUS "FreeRTOS_INCLUDE_DIRS: ${FreeRTOS_INCLUDE_DIRS}")
 
 SET(FreeRTOS_SOURCES
 	${FREERTOS_SOURCES}
@@ -112,6 +117,8 @@ SET(FreeRTOS_SOURCES
 	${PORT_ARM_SOURCE}
 	${HEAP_IMP_SOURCE}
 )
+
+MESSAGE(STATUS "FreeRTOS_SOURCES: ${FreeRTOS_SOURCES}")
 
 INCLUDE(FindPackageHandleStandardArgs)
 
