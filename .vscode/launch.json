@@ -1,0 +1,66 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Black Magic Probe",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/${workspaceFolderBasename}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "targetArchitecture": "arm",
+            "miDebuggerPath": "arm-none-eabi-gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "customLaunchSetupCommands": [
+                {
+                    "description": "Connect to probe",
+                    "text": "target extended-remote COM9"
+                },
+                {
+                    "description": "Enable powering target",
+                    "text": "monitor tpwr enable"
+                },
+                {
+                    "description": "Scan for targets",
+                    "text": "monitor swdp_scan"
+                },
+                {
+                    "description": "Attach",
+                    "text": "attach 1"
+                },
+                {
+                    "description": "Find file",
+                    "text": "file ${workspaceRoot}/build/${workspaceFolderBasename}"
+                },
+                {
+                    "description": "Load file",
+                    "text": "load"
+                },
+                {
+                    "description": "Access all memory",
+                    "text": "set mem inacessible-by-default off"
+                },
+                {
+                    "description": "Break at the start of main()",
+                    "text": "break main"
+                }
+            ],
+            "windows": {
+                "miDebuggerPath": "arm-none-eabi-gdb.exe"
+            }
+        }
+    ]
+}

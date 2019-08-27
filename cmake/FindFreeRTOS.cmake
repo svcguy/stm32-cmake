@@ -17,6 +17,7 @@ ELSEIF(STM32_FAMILY STREQUAL "L1")
 ENDIF()
 
 SET(FREERTOS_SRC_FILES
+	freertos.c
 	croutine.c
 	event_groups.c
 	list.c
@@ -60,7 +61,7 @@ ENDIF()
 
 FIND_PATH(FREERTOS_COMMON_INC_DIR ${FREERTOS_HEADERS}
 	PATH_SUFFIXES include
-	HINTS ${STM32Cube_DIR}/Middlewares/Third_Party/FreeRTOS/Source
+	HINTS ${STM32Cube_DIR}/Middlewares/Third_Party/FreeRTOS/Source ${PROJECT_SOURCE_DIR}
 	CMAKE_FIND_ROOT_PATH_BOTH
 )
 

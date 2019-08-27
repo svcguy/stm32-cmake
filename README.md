@@ -9,7 +9,7 @@ Forked from https://github.com/ObKo/stm32-cmake.  Adapted to suit my embedded de
 * Remove ChibiOS (retain support for FreeRTOS)
 * Complete support for uGFX
 * Add VSCode support
-* Add Black Magic Probe flashing and debug support
+* Cleanup .cmake files
 
 Thanks to ObKo and everyone who contributed for thier excellent work.
 

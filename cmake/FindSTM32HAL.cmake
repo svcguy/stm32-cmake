@@ -77,11 +77,11 @@ ELSEIF(STM32_FAMILY STREQUAL "F7")
     SET(HAL_PREFIX stm32f7xx_)
 
 ELSEIF(STM32_FAMILY STREQUAL "L0")
-    SET(HAL_COMPONENTS adc comp cortex crc crs cryp dac dma exti firewall flash gpio i2c
-                       i2s irda iwdg lcd lptim lpuart pcd pwr rcc rng rtc smartcard
+    SET(HAL_COMPONENTS adc comp cortex crc crs cryp dac dma exti firewall flash flash_ramfunc 
+                       gpio i2c i2s irda iwdg lcd lptim lpuart pcd pwr rcc rng rtc smartcard
                        smbus spi tim tsc uart usart utils wwdg)
 
-    SET(HAL_REQUIRED_COMPONENTS cortex pwr rcc)
+    SET(HAL_REQUIRED_COMPONENTS cortex flash flash_ramfunc pwr rcc)
 
     # Components that have _ex sources
     SET(HAL_EX_COMPONENTS adc comp crc cryp dac flash i2c pcd pwr rcc rtc smartcard tim uart usart)
@@ -121,6 +121,9 @@ SET(HAL_HEADERS
 
 SET(HAL_SRCS
 	${HAL_PREFIX}hal.c
+    ${HAL_PREFIX}hal_msp.c
+    ${HAL_PREFIX}it.c
+#    ${HAL_PREFIX}_timebase_tim.c  
 )
 IF(NOT STM32HAL_FIND_COMPONENTS)
     SET(STM32HAL_FIND_COMPONENTS ${HAL_COMPONENTS})
@@ -165,7 +168,7 @@ FOREACH(HAL_SRC ${HAL_SRCS})
     SET(HAL_${HAL_SRC_CLEAN}_FILE HAL_SRC_FILE-NOTFOUND)
     FIND_FILE(HAL_${HAL_SRC_CLEAN}_FILE ${HAL_SRC}
         PATH_SUFFIXES src stm32${STM32_FAMILY_LOWER}
-        HINTS ${STM32Cube_DIR}/Drivers/STM32${STM32_FAMILY}xx_HAL_Driver/Src
+        HINTS ${STM32Cube_DIR}/Drivers/STM32${STM32_FAMILY}xx_HAL_Driver/Src ${PROJECT_SOURCE_DIR}
         CMAKE_FIND_ROOT_PATH_BOTH
     )
     LIST(APPEND STM32HAL_SOURCES ${HAL_${HAL_SRC_CLEAN}_FILE})

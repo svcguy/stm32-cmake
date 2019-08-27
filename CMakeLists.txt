@@ -20,11 +20,11 @@ SET(STM32Cube_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 MESSAGE(STATUS "STM32Cube_DIR: ${STM32Cube_DIR}")
 
 # Required - Change the line below to match the CubeMX generated linker script
-SET(STM32_LINKER_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/STM32L051CBTx_FLASH.ld")
+SET(STM32_LINKER_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/STM32L051C8Tx_FLASH.ld")
 MESSAGE(STATUS "STM32_LINKER_SCRIPT: ${STM32_LINKER_SCRIPT}")
 
 # Required - Change the name of your project
-PROJECT(displayTest)
+PROJECT(lorawan)
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 ENABLE_LANGUAGE(ASM)
@@ -38,11 +38,7 @@ FIND_PACKAGE(CMSIS REQUIRED)
 #FIND_PACKAGE(STM32LL COMPONENTS sdmmc fmc usb REQUIRED)
 
 # To use STM32CubeMX HAL, uncomment line below.  Optionally, set components
-#FIND_PACKAGE(STM32HAL COMPONENTS adc cec cortex crc dcmi dma dma2d 
-#                                 eth exti flash gpio hash hcd i2c i2s irda 
-#                                 iwdg lptim ltdc mmc pcd pwr qspi rcc rtc
-#                                 sai sd sdram smartcard spdifrx spi
-#                                 tim uart usart wwdg REQUIRED)
+FIND_PACKAGE(STM32HAL COMPONENTS cortex dma flash flash_ramfunc gpio i2c pwr rcc spi tim uart REQUIRED)
 
 # To use FreeRTOS, uncomment line below.  Must set heap implementation
 #SET(FREERTOS_HEAP_IMPL 4)
@@ -77,29 +73,25 @@ INCLUDE_DIRECTORIES(
 
 SET(PROJECT_SOURCES
     ${PROJECT_SOURCE_DIR}/main.c
-    ${PROJECT_SOURCE_DIR}/stm32${STM32_FAMILY}xx_hal_msp.c
-    ${PROJECT_SOURCE_DIR}/stm32${STM32_FAMILY}xx_hal_timebase_tim.c
-    ${PROJECT_SOURCE_DIR}/stm32${STM32_FAMILY}xx_it.c 
-    ${PROJECT_SOURCE_DIR}/freertos.c
-    ${PROJECT_SOURCE_DIR}/fatfs_platform.c
-    ${PROJECT_SOURCE_DIR}/fatfs.c
-    ${PROJECT_SOURCE_DIR}/bsp_driver_sd.c
-    ${PROJECT_SOURCE_DIR}/usb_host.c
-    ${PROJECT_SOURCE_DIR}/usbh_conf.c
-    ${PROJECT_SOURCE_DIR}/usbh_platform.c
-    ${PROJECT_SOURCE_DIR}/stm32f7_i2c.c
-    ${PROJECT_SOURCE_DIR}/stm32f746g_discovery_sdram.c
+#    ${PROJECT_SOURCE_DIR}/freertos.c
+#    ${PROJECT_SOURCE_DIR}/fatfs_platform.c
+#    ${PROJECT_SOURCE_DIR}/fatfs.c
+#    ${PROJECT_SOURCE_DIR}/bsp_driver_sd.c
+#    ${PROJECT_SOURCE_DIR}/usb_host.c
+#    ${PROJECT_SOURCE_DIR}/usbh_conf.c
+#    ${PROJECT_SOURCE_DIR}/usbh_platform.c
+#    ${PROJECT_SOURCE_DIR}/stm32f7_i2c.c
+#    ${PROJECT_SOURCE_DIR}/stm32f746g_discovery_sdram.c
 #    ${PROJECT_SOURCE_DIR}/usb_device.c
 #    ${PROJECT_SOURCE_DIR}/usbd_conf.c
 #    ${PROJECT_SOURCE_DIR}/usbd_platform.c
 )
 
 MESSAGE(STATUS "STM32_LINKER_SCRIPT: ${STM32_LINKER_SCRIPT}")
-MESSAGE(STATUS "TARGET_LD_FLAGS: ${TARGET_LD_FLAGS}")
 
-ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${PROJECT_SOURCES} ${CMSIS_SOURCES} ${STM32HAL_SOURCES} ${STM32LL_SOURCES} 
-                                     ${FreeRTOS_SOURCES} ${FATFS_SOURCES} ${USBDevice_SOURCES} ${USBHost_SOURCES}
-                                     ${uGFX_SOURCES})
+ADD_EXECUTABLE(${CMAKE_PROJECT_NAME}    ${PROJECT_SOURCES} ${CMSIS_SOURCES} ${STM32HAL_SOURCES} ${STM32LL_SOURCES} 
+                                        ${FreeRTOS_SOURCES} ${FATFS_SOURCES} ${USBDevice_SOURCES} ${USBHost_SOURCES}
+                                        ${uGFX_SOURCES})
 
 STM32_SET_TARGET_PROPERTIES(${CMAKE_PROJECT_NAME})
 STM32_ADD_HEX_BIN_TARGETS(${CMAKE_PROJECT_NAME})

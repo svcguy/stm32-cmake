@@ -5,7 +5,6 @@
 *.o
 *.ko
 *.obj
-*.elf
 
 # Linker output
 *.ilk
@@ -32,3 +31,12 @@
 /build/CMakeFiles/*.*
 /build/CMakeTmp/*.*
 /build/cmake*.*
+/build/*.ninja*
+/build/*.json
+/build/*.ld
+
+# CubeMX
+*.mxproject
+Makefile
+
+# VSCode
